@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Support\Carbon;
 
+//use App\Models\User;
 class ItemController extends Controller
 {
     /**
@@ -13,10 +14,22 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index()
     {
-        return Item::orderBy('created_at','DESC')->get();
+        
+        return Item::where('user_id', auth()->id())->get();
+        //return auth()->id();    
+        //return Item::orderBy('created_at','DESC')->get();
+
     }
+
+   
 
     /**
      * Show the form for creating a new resource.
@@ -38,6 +51,7 @@ class ItemController extends Controller
     {
         $newItem = new Item;
         $newItem->name = $request->item["name"];
+        $newItem->user_id = auth()->id();
         $newItem->save();
 
         return $newItem;

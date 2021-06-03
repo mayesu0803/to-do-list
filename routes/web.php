@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +19,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+	
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/home', function () {
-    return view('welcome');
-});
+    	return view('welcome');
 
+	
+	});
 });
